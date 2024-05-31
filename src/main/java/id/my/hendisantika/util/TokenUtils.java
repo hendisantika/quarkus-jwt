@@ -71,4 +71,9 @@ public class TokenUtils {
         pem = pem.replaceAll("\n", "");
         return pem.trim();
     }
+
+    public static int currentTimeInSecs() {
+        long currentTimeMS = System.currentTimeMillis();
+        return (int) (currentTimeMS / 1000);
+    }
 }
