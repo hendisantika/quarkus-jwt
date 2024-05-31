@@ -1,6 +1,12 @@
 package id.my.hendisantika.controller;
 
+import id.my.hendisantika.model.Message;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,4 +20,12 @@ import jakarta.ws.rs.Path;
  */
 @Path("/resource")
 public class ResourceController {
+
+    @RolesAllowed("USER")
+    @GET
+    @Path("/user")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response user() {
+        return Response.ok(new Message("Content for user")).build();
+    }
 }
