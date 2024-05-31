@@ -36,4 +36,12 @@ public class ResourceController {
     public Response admin() {
         return Response.ok(new Message("Content for admin")).build();
     }
+
+    @RolesAllowed({"USER", "ADMIN"})
+    @GET
+    @Path("/user-or-admin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response userOrAdmin() {
+        return Response.ok(new Message("Content for user or admin")).build();
+    }
 }
