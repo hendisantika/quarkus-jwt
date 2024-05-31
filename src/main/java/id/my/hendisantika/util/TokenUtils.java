@@ -6,11 +6,11 @@ import io.smallrye.jwt.build.JwtClaimsBuilder;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
 import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.HashSet;
 import java.util.Set;
-
-import static io.smallrye.jwt.util.KeyUtils.decodePrivateKey;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,4 +49,13 @@ public class TokenUtils {
             return decodePrivateKey(new String(tmp, 0, length, StandardCharsets.UTF_8));
         }
     }
+
+    public static PrivateKey decodePrivateKey(final String pemEncoded) throws Exception {
+        byte[] encodedBytes = toEncodedBytes(pemEncoded);
+
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encodedBytes);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePrivate(keySpec);
+    }
+
 }
