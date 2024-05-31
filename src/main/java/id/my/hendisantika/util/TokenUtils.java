@@ -63,4 +63,12 @@ public class TokenUtils {
         final String normalizedPem = removeBeginEnd(pemEncoded);
         return Base64.getDecoder().decode(normalizedPem);
     }
+
+    public static String removeBeginEnd(String pem) {
+        pem = pem.replaceAll("-----BEGIN (.*)-----", "");
+        pem = pem.replaceAll("-----END (.*)----", "");
+        pem = pem.replaceAll("\r\n", "");
+        pem = pem.replaceAll("\n", "");
+        return pem.trim();
+    }
 }
