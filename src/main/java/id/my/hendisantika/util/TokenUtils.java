@@ -4,11 +4,13 @@ import id.my.hendisantika.model.Role;
 import io.smallrye.jwt.build.Jwt;
 import io.smallrye.jwt.build.JwtClaimsBuilder;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.util.HashSet;
 import java.util.Set;
 
-import static io.smallrye.jwt.util.KeyUtils.readPrivateKey;
+import static io.smallrye.jwt.util.KeyUtils.decodePrivateKey;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,5 +40,13 @@ public class TokenUtils {
         claimsBuilder.groups(groups);
 
         return claimsBuilder.jws().signatureKeyId(privateKeyLocation).sign(privateKey);
+    }
+
+    public static PrivateKey readPrivateKey(final String pemResName) throws Exception {
+        try (InputStream contentIS = TokenUtils.class.getResourceAsStream(pemResName)) {
+            byte[] tmp = new byte[4096];
+            int length = contentIS.read(tmp);
+            return decodePrivateKey(new String(tmp, 0, length, StandardCharsets.UTF_8));
+        }
     }
 }
