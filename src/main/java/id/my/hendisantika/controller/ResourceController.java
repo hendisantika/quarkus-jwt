@@ -28,4 +28,12 @@ public class ResourceController {
     public Response user() {
         return Response.ok(new Message("Content for user")).build();
     }
+
+    @RolesAllowed("ADMIN")
+    @GET
+    @Path("/admin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response admin() {
+        return Response.ok(new Message("Content for admin")).build();
+    }
 }
