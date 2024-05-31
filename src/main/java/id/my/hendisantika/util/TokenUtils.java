@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,4 +59,8 @@ public class TokenUtils {
         return kf.generatePrivate(keySpec);
     }
 
+    public static byte[] toEncodedBytes(final String pemEncoded) {
+        final String normalizedPem = removeBeginEnd(pemEncoded);
+        return Base64.getDecoder().decode(normalizedPem);
+    }
 }
